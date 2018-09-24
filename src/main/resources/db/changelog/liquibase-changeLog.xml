@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="ilmir (generated)" id="1537812714293-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-2">
+        <createSequence sequenceName="logging_event_id_seq"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-3">
+        <createTable tableName="logging_event">
+            <column name="timestmp" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="formatted_message" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="logger_name" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level_string" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="thread_name" type="VARCHAR(254)"/>
+            <column name="reference_flag" type="SMALLINT"/>
+            <column name="arg0" type="VARCHAR(254)"/>
+            <column name="arg1" type="VARCHAR(254)"/>
+            <column name="arg2" type="VARCHAR(254)"/>
+            <column name="arg3" type="VARCHAR(254)"/>
+            <column name="caller_filename" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="caller_class" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="caller_method" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="caller_line" type="BPCHAR(4)">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="event_id" type="BIGSERIAL">
+                <constraints primaryKey="true" primaryKeyName="logging_event_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-4">
+        <createTable tableName="logging_event_exception">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="i" type="SMALLINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trace_line" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-5">
+        <createTable tableName="logging_event_property">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mapped_key" type="VARCHAR(254)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mapped_value" type="VARCHAR(1024)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-6">
+        <createTable tableName="watcher_config_entity">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-7">
+        <createTable tableName="xml_file">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_name" type="VARCHAR(255)"/>
+            <column name="xml_text" type="Blob"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-8">
+        <addPrimaryKey columnNames="event_id, i" constraintName="logging_event_exception_pkey" tableName="logging_event_exception"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-9">
+        <addPrimaryKey columnNames="event_id, mapped_key" constraintName="logging_event_property_pkey" tableName="logging_event_property"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-10">
+        <addPrimaryKey columnNames="id" constraintName="watcher_config_entity_pkey" tableName="watcher_config_entity"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-11">
+        <addPrimaryKey columnNames="id" constraintName="xml_file_pkey" tableName="xml_file"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-12">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="logging_event_exception" constraintName="logging_event_exception_event_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="event_id" referencedTableName="logging_event"/>
+    </changeSet>
+    <changeSet author="ilmir (generated)" id="1537812714293-13">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="logging_event_property" constraintName="logging_event_property_event_id_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="event_id" referencedTableName="logging_event"/>
+    </changeSet>
+</databaseChangeLog>

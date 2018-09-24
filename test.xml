@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<tests>
+    <test key="1">one</test>
+    <test key="2">two</test>
+    <test key="3">three</test>
+</tests>
