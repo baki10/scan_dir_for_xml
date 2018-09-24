@@ -1,1 +1,5 @@
-# scan_dir_for_xml
+spring-boot
+
+база данных - postgres
+
+изменения в базу вливаются с помощью liquibase
