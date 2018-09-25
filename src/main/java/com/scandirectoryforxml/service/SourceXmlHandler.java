@@ -16,7 +16,7 @@ public class SourceXmlHandler {
 
     private Logger logger = LoggerFactory.getLogger(SourceXmlHandler.class);
 
-    private Executor executor = Executors.newFixedThreadPool(8);
+    private Executor executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     public Consumer<Path> pathConsumer() {
         return source -> {
