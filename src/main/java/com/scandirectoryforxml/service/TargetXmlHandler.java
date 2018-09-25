@@ -2,7 +2,6 @@ package com.scandirectoryforxml.service;
 
 import com.scandirectoryforxml.config.WatcherConfig;
 import com.scandirectoryforxml.model.XmlFile;
-import com.scandirectoryforxml.model.XmlFileMessage;
 import com.scandirectoryforxml.repository.XmlFileRepository;
 import com.scandirectoryforxml.util.FileUtil;
 import org.slf4j.Logger;
@@ -36,8 +35,6 @@ public class TargetXmlHandler {
                 saveToDb(path);
 
                 // После сохранения информации в БД, отправить сообщение в active mq.
-                // В теле сообщения передать содержимое файла,
-                // дополнительно установить свойство сообщения Name, в котором указать имя файла.
                 logger.debug("sending message to the activemq broker: " + path.toString());
                 sendToActiveMq(path);
 
@@ -58,7 +55,12 @@ public class TargetXmlHandler {
         List<String> lines = Files.readAllLines(path);
         String content = String.join("\n", lines);
         String name = String.valueOf(path.getFileName());
-        jmsTemplate.convertAndSend("xmlMessage", new XmlFileMessage(name, content));
+        // В теле сообщения передать содержимое файла,
+        // дополнительно установить свойство сообщения Name, в котором указать имя файла.
+        jmsTemplate.convertAndSend("xmlMessage", content, message -> {
+            message.setStringProperty("Name", name);
+            return message;
+        });
     }
 
     private void saveToDb(Path path) throws IOException {
